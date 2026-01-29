@@ -1,0 +1,60 @@
+:root {
+  --bg: #f4f1ea;
+  --ink: #231f20;
+  --accent: #b34700;
+  --card: #fff7ee;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Georgia", "Times New Roman", serif;
+  background: radial-gradient(circle at top, #fff3e1 0%, #f4f1ea 60%);
+  color: var(--ink);
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.hero {
+  padding: 20px 0 10px;
+  border-bottom: 2px solid var(--ink);
+}
+
+h1 {
+  font-size: 40px;
+  margin: 0 0 8px;
+}
+
+.card {
+  background: var(--card);
+  padding: 20px;
+  margin: 20px 0;
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+input[type="text"], input[type="file"] {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 2px solid var(--ink);
+  background: #fff;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--ink);
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.status {
+  margin-top: 16px;
+  font-style: italic;
+}
