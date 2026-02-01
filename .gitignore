@@ -11,9 +11,11 @@ node_modules/
 
 # Env & secrets
 .env
+/apps/api/.env
 
 # Data
 /data/
+/apps/api/data/
 
 # OS
 .DS_Store

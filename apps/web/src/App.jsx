@@ -17,12 +17,16 @@ export default function App() {
     const form = new FormData();
     Array.from(files).forEach((file) => form.append("files", file));
     setStatus("Uploading...");
-    const res = await fetch(`${API_BASE}/documents/upload`, {
-      method: "POST",
-      body: form,
-    });
-    const data = await res.json();
-    setStatus(`Uploaded ${data.uploaded} chunk(s).`);
+    try {
+      const res = await fetch(`${API_BASE}/documents/upload`, {
+        method: "POST",
+        body: form,
+      });
+      const data = await res.json();
+      setStatus(`Uploaded ${data.uploaded} chunk(s).`);
+    } catch (err) {
+      setStatus("Upload failed. Check backend logs.");
+    }
   }
 
   async function handleSearch(e) {
@@ -76,13 +80,13 @@ export default function App() {
               Faithfulness: {faithfulness ?? "n/a"} | Hallucinated: {hallucinated ? "Yes" : "No"}
             </div>
             {citations.length > 0 && (
-              <ul>
+              <ol className="citations">
                 {citations.map((c, i) => (
                   <li key={`${c.chunk_id}-${i}`}>
-                    {c.doc_id}#{c.chunk_id}: {c.snippet}
+                    <strong>{c.doc_id}</strong> — {c.snippet}
                   </li>
                 ))}
-              </ul>
+              </ol>
             )}
           </div>
         )}

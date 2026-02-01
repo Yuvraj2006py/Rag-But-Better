@@ -58,3 +58,12 @@ button {
   margin-top: 16px;
   font-style: italic;
 }
+
+.citations {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.citations li {
+  margin: 6px 0;
+}

@@ -87,7 +87,25 @@ class OpenSearchStore:
             "start_paragraph": chunk.start_paragraph,
             "end_paragraph": chunk.end_paragraph,
         }
-        self.client.index(index=self.index, id=chunk.chunk_id, body=doc, refresh=True)
+        # Avoid per-chunk refresh to improve ingestion performance.
+        self.client.index(index=self.index, id=chunk.chunk_id, body=doc, refresh=False)
+
+    def add_many(self, chunks: list[Chunk]) -> None:
+        if not chunks:
+            return
+        actions = []
+        for chunk in chunks:
+            actions.append({\"index\": {\"_index\": self.index, \"_id\": chunk.chunk_id}})
+            actions.append(
+                {
+                    \"doc_id\": chunk.doc_id,
+                    \"text\": chunk.text,
+                    \"start_paragraph\": chunk.start_paragraph,
+                    \"end_paragraph\": chunk.end_paragraph,
+                }
+            )
+        # Bulk index and refresh once at the end.
+        self.client.bulk(body=actions, refresh=True)
 
     def search(self, query: str, top_k: int) -> list[ExternalSparseResult]:
         res = self.client.search(

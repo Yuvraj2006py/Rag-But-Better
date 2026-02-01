@@ -32,7 +32,12 @@ class Pipeline:
         for chunk, vec in zip(chunks, embeddings, strict=False):
             self.chunks[chunk.chunk_id] = chunk
             self.vector_store.add(chunk, vec)
-            self.sparse_store.add(chunk)
+        # Batch sparse indexing if supported.
+        if hasattr(self.sparse_store, "add_many"):
+            self.sparse_store.add_many(chunks)
+        else:
+            for chunk in chunks:
+                self.sparse_store.add(chunk)
         return len(chunks)
 
     def citations_for(self, chunk_ids: list[str]) -> list[Citation]:
