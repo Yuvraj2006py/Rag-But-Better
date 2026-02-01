@@ -1,4 +1,5 @@
 # RAG but Better
+## https://rag-but-better-1.onrender.com
 
 Build a local semantic search + QA system over internal documents with proper chunking, hybrid retrieval (dense + sparse), reranking, citations, evaluation, and a feedback loop. Groq is used for query rewriting and answer generation so you do not need to run a local LLM.
 
